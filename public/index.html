@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style/style.css">
+    <title>Puddle TS</title>
+</head>
+
+<body>
+    <div class="main">
+        <div class="container">
+            <nav>
+                <div class="logo">PUDDLE</div>
+                <ul>
+                    <li><a id="cart-toggle">Cart <span class="badge"></span></a></li>
+                    <li><a id="order-toggle">orders</a></li>
+                </ul>
+            </nav>
+            <div class="product-cards">
+                <!-- <div class="card">
+                    <img src="./assets/dumdum.webp" alt="" class="card-img">
+                    <div class="card-details">
+                        <h2 class="card-name">Honey</h2>
+                        <p class="card-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                        <h4 class="card-price">Ksh 100</h4>
+                    </div>
+                    <button class="cart-btn">Add To Cart</button>
+                </div> -->
+            </div>
+            <div class="cart-view" style="display: none;">
+                <h2>Your Cart</h2>
+                <div class="cart-items">
+                    <!-- <div class="cart-item">
+                        <div class="cart-name">
+                            1. Soap
+                        </div>
+                        <img src="./assets/dumdum.jpg" alt="" class="cart-img">
+                        <div class="cart-price">Ksh 500</div>
+                        <button class="del-item">Delete</button>
+                    </div> -->
+                </div>
+                <button class="checkout">Checkout</button>
+                <div>Total: Ksh <span class="total"></span>.</div>
+            </div>
+            <div class="orders-view" style="display: none;">
+                <h2>Your Orders</h2>
+                <div class="order-items">
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+<script src="../dist/index.js"></script>
+
+</html>

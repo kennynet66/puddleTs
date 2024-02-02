@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style/style.css">
+    <title>Puddle TS | ADMIN</title>
+</head>
+<body>
+    <div class="main">
+        <div class="container">
+            <nav>
+                <div class="logo">PUDDLE</div>
+                <ul>
+                    <li><a href="#">Orders</a></li>
+                    <li><a id="form-toggle">New Item</a></li>
+                </ul>
+            </nav>
+            <div class="wrapper">
+                <form id="item-form" style="display: none;">
+                    <div class="inputDiv">
+                        <label for="item-name">Item Name: </label> <br>
+                        <input type="text" name="" id="item-name" placeholder="Enter Item name">
+                        <div id="error" class="itemNameError"></div>
+                    </div>
+                    <div class="inputDiv">
+                        <label for="item-name">Item Image: </label> <br>
+                        <input type="text" name="" id="item-image" placeholder="Enter image link">
+                        <div id="error" class="itemImageError"></div>
+                    </div>
+                    <div class="inputDiv">
+                        <label for="item-name">Item Description: </label> <br>
+                        <input type="text" name="" id="item-desc" placeholder="Enter Item description" spellcheck="true">
+                        <div id="error" class="itemDescError"></div>
+                    </div>
+                    <div class="inputDiv">
+                        <label for="item-name">Item Price: </label> <br>
+                        <input type="number" name="" id="item-price" placeholder="Enter Item price">
+                        <div id="error" class="itemPriceError"></div>
+                    </div>
+                    <input type="submit" value="Create Item">
+                </form>
+            </div>
+            <div class="content-wrapper">
+                <div class="product-cards">
+                <!-- <div class="card">
+                    <img src="./assets/dumdum.webp" alt="" class="card-img">
+                    <div class="card-details">
+                        <h2 class="card-name">Honey</h2>
+                        <p class="card-desc">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                        <h4 class="card-price">Ksh 100</h4>
+                    </div>
+                    <button class="delete">Delete</button>
+                </div> -->
+            </div>
+            <div class="admin-orders-view"></div>
+            
+            </div>
+            
+        </div>
+    </div>
+</body>
+<script src="../dist/admin.js"></script>
+</html>
