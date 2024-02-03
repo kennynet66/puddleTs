@@ -148,7 +148,7 @@ li>a:hover {
 }
 
 .delete,
-.cart-btn {
+.cart-btn, .update-btn {
     width: 95%;
     margin: 4%;
     border: none;
@@ -164,7 +164,7 @@ li>a:hover {
     background-color: #ff0000;
     
 }
-.cart-btn:hover {
+.cart-btn:hover, .update-btn:hover {
     background-color: yellowgreen;
 }
 
@@ -275,6 +275,10 @@ li>a:hover {
 .admin-orders-view {
     flex: 1;
     padding: 10px;
+}
+
+.empty-order {
+    color: #ffffff;
 }
 
 @media (max-width: 1000px) {

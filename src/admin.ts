@@ -6,6 +6,7 @@ let itemDesc = document.querySelector('#item-desc') as HTMLInputElement;
 let itemPrice = document.querySelector('#item-price') as HTMLInputElement;
 let formToggle = document.querySelector('#form-toggle') as HTMLAnchorElement;
 let productCards = document.querySelector('.product-cards') as HTMLDivElement;
+let ordersView = document.querySelector('.admin-orders-view') as HTMLDivElement;
 
 // Load the error divs
 let itemNameError = document.querySelector('.itemNameError') as HTMLDivElement;
@@ -36,6 +37,7 @@ interface item {
 
 // Initialize an empty items array of type item(interface) to store new items and also items existing from the local storage
 let itemsArr: item[] = [];
+let adminOrders: order[] = [];
 
 // Get the localstorage when the page loads
 window.onload = () => {
@@ -49,6 +51,21 @@ window.onload = () => {
         })
     } else {
         return
+    }
+    let data = getOrders()
+    if (data) {
+        data.forEach((el: any) => {
+            adminOrders.push(el)
+            console.log(el);
+            console.log("The status for this order is", el.status);
+
+        })
+    } else {
+        let emptyOrder = document.createElement('h1');
+        emptyOrder.className = "empty-order"
+        emptyOrder.textContent = "No orders"
+
+        ordersView.appendChild(emptyOrder)
     }
 }
 
@@ -67,6 +84,13 @@ itemForm.addEventListener('submit', (e) => {
 
     // If the input is valid store it to the local storage
     if (item) {
+        itemName.value = ""
+        itemImage.value = ""
+        itemDesc.value = ""
+        itemPrice.value = ""
+        itemForm.style.display = "none"
+        formToggle.style.backgroundColor = "#36454F"
+        formToggle.textContent = "New Item";
         itemsArr.push(item);
         localStorage.setItem("puddleItems", JSON.stringify(itemsArr));
         createCards(itemsArr);
@@ -123,6 +147,14 @@ function createCards(item: item[]) {
             let card = document.createElement('div');
             card.className = 'card';
 
+            let updtBtn = document.createElement('button');
+            updtBtn.className = "update-btn";
+            updtBtn.textContent = "Update";
+            updtBtn.addEventListener('click', () => {
+                updateItem(index)
+                productCards.textContent = ""
+            })
+
             let cardImg = document.createElement('img');
             cardImg.setAttribute('src', el.itemImage);
 
@@ -144,9 +176,11 @@ function createCards(item: item[]) {
             let delBtn = document.createElement('button');
             delBtn.className = 'delete';
             delBtn.textContent = "Delete";
-            delBtn.addEventListener('click', ()=> {
+            delBtn.addEventListener('click', () => {
                 deleteItem(index);
             })
+
+
 
             cardDetails.appendChild(cardName);
             cardDetails.appendChild(cardDesc);
@@ -155,6 +189,7 @@ function createCards(item: item[]) {
             card.appendChild(cardImg);
             card.appendChild(cardDetails);
             card.appendChild(delBtn);
+            card.appendChild(updtBtn);
 
             productCards.appendChild(card);
         })
@@ -164,8 +199,30 @@ function createCards(item: item[]) {
 
 }
 
-function deleteItem(index:number) {
+function deleteItem(index: number) {
     itemsArr.splice(index, 1);
     localStorage.setItem("puddleItems", JSON.stringify(itemsArr));
     createCards(itemsArr);
+}
+
+
+function getOrders() {
+    let data: any = localStorage.getItem('puddleTsOrders');
+    return data = JSON.parse(data);
+}
+
+function updateItem(index: number) {
+    itemForm.style.display = "flex";
+    formToggle.style.backgroundColor = "red";
+    formToggle.textContent = "Close";
+
+    let selectedItem = itemsArr[index]
+    console.log(selectedItem);
+
+    if (itemName && itemImage && itemDesc && itemPrice) {
+        itemName.value = selectedItem.itemName
+        itemImage.value = selectedItem.itemImage
+        itemDesc.value = selectedItem.itemDesc
+        itemPrice.value = `${selectedItem.itemPrice}`
+    }
 }

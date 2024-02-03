@@ -7,6 +7,7 @@ let itemDesc = document.querySelector('#item-desc');
 let itemPrice = document.querySelector('#item-price');
 let formToggle = document.querySelector('#form-toggle');
 let productCards = document.querySelector('.product-cards');
+let ordersView = document.querySelector('.admin-orders-view');
 // Load the error divs
 let itemNameError = document.querySelector('.itemNameError');
 let itemImageError = document.querySelector('.itemImageError');
@@ -27,6 +28,7 @@ formToggle.addEventListener('click', () => {
 });
 // Initialize an empty items array of type item(interface) to store new items and also items existing from the local storage
 let itemsArr = [];
+let adminOrders = [];
 // Get the localstorage when the page loads
 window.onload = () => {
     let items = localStorage.getItem("puddleItems");
@@ -41,6 +43,20 @@ window.onload = () => {
     else {
         return;
     }
+    let data = getOrders();
+    if (data) {
+        data.forEach((el) => {
+            adminOrders.push(el);
+            console.log(el);
+            console.log("The status for this order is", el.status);
+        });
+    }
+    else {
+        let emptyOrder = document.createElement('h1');
+        emptyOrder.className = "empty-order";
+        emptyOrder.textContent = "No orders";
+        ordersView.appendChild(emptyOrder);
+    }
 };
 // Handle item creation form
 itemForm.addEventListener('submit', (e) => {
@@ -54,6 +70,13 @@ itemForm.addEventListener('submit', (e) => {
     let item = verifyInput(itemName.value, itemImage.value, itemDesc.value, parseFloat(itemPrice.value));
     // If the input is valid store it to the local storage
     if (item) {
+        itemName.value = "";
+        itemImage.value = "";
+        itemDesc.value = "";
+        itemPrice.value = "";
+        itemForm.style.display = "none";
+        formToggle.style.backgroundColor = "#36454F";
+        formToggle.textContent = "New Item";
         itemsArr.push(item);
         localStorage.setItem("puddleItems", JSON.stringify(itemsArr));
         createCards(itemsArr);
@@ -108,6 +131,13 @@ function createCards(item) {
         item.forEach((el, index) => {
             let card = document.createElement('div');
             card.className = 'card';
+            let updtBtn = document.createElement('button');
+            updtBtn.className = "update-btn";
+            updtBtn.textContent = "Update";
+            updtBtn.addEventListener('click', () => {
+                updateItem(index);
+                productCards.textContent = "";
+            });
             let cardImg = document.createElement('img');
             cardImg.setAttribute('src', el.itemImage);
             let cardDetails = document.createElement('div');
@@ -133,6 +163,7 @@ function createCards(item) {
             card.appendChild(cardImg);
             card.appendChild(cardDetails);
             card.appendChild(delBtn);
+            card.appendChild(updtBtn);
             productCards.appendChild(card);
         });
     }
@@ -144,4 +175,21 @@ function deleteItem(index) {
     itemsArr.splice(index, 1);
     localStorage.setItem("puddleItems", JSON.stringify(itemsArr));
     createCards(itemsArr);
+}
+function getOrders() {
+    let data = localStorage.getItem('puddleTsOrders');
+    return data = JSON.parse(data);
+}
+function updateItem(index) {
+    itemForm.style.display = "flex";
+    formToggle.style.backgroundColor = "red";
+    formToggle.textContent = "Close";
+    let selectedItem = itemsArr[index];
+    console.log(selectedItem);
+    if (itemName && itemImage && itemDesc && itemPrice) {
+        itemName.value = selectedItem.itemName;
+        itemImage.value = selectedItem.itemImage;
+        itemDesc.value = selectedItem.itemDesc;
+        itemPrice.value = `${selectedItem.itemPrice}`;
+    }
 }
